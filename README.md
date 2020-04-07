@@ -1,4 +1,11 @@
 ## Little daemon seeding on email and transfer text from messages to given Telegram Chats
+### HowTo
+* Enable IMAP in your GMAIL
+* Create Application password
+* Create bot and get it's token 
+* cp config.yml.tpl to config.yml and fill it.
+* setup in screen or create systemd unit.
+
 ### How to build 
 
 ```bash
