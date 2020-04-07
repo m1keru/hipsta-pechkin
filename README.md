@@ -7,7 +7,7 @@ make
 
 ### How to add Channels
 
-Add bot to given channel and check daemon output, it will print ChatID. Paste it into chats section in config.yml
+Add bot to given channel and check daemon output, it will print ChatID. Paste it into chats section in config.yml.
 
 ### Usefull links:
 
