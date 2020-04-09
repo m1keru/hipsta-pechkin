@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/bytbox/go-pop3"
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message/mail"
@@ -54,30 +53,6 @@ func configRead(path *string) (Config, error) {
 	return config, nil
 }
 
-func readEmailPop(config *Config) {
-	server := config.EmailConfig.ServerAddress
-	port := config.EmailConfig.ServerPort
-	log.Println(port)
-	login := config.EmailConfig.UserAddress
-	password := config.EmailConfig.UserPassword
-	popClient, err := pop3.DialTLS(fmt.Sprintf("%s:%d", server, port))
-	if err != nil {
-		log.Fatalf("unable to connect to mail server, Error: \n%v", err)
-	}
-	if err = popClient.Auth(login, password); err != nil {
-		log.Fatalf("unable to auth at mail server, Error: \n%v", err)
-	}
-	msgs, _, err := popClient.ListAll()
-	if err != nil {
-		log.Println("Read it and generate password: https://devanswers.co/outlook-and-gmail-problem-application-specific-password-required/")
-		log.Fatalf("unable to read list of emails at mail server, Error: \n%v", err)
-	}
-	for _, i := range msgs {
-		text, _ := popClient.Retr(i)
-		log.Println(text)
-	}
-}
-
 func readEmailImap(config *Config, msgs *chan string) error {
 	server := config.EmailConfig.ServerAddress
 	port := config.EmailConfig.ServerPort
@@ -101,7 +76,6 @@ func readEmailImap(config *Config, msgs *chan string) error {
 	from := uint32(1)
 	to := mbox.Messages
 	if mbox.Messages > 3 {
-		// We're using unsigned integers here, only substract if the result is > 0
 		from = mbox.Messages - 3
 	}
 
